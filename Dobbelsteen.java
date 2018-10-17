@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class Dobbelsteen {
 	int ogenWorp;
-	final int maxAantalWorpen = 3;
 
 	int werpen(){
 		Random rand = new Random();

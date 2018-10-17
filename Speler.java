@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class Speler {
 	ArrayList<Worp> worpGeschiedenis = new ArrayList<Worp>();
-		
+	int aantalWorpen;
+	final int maxAantalWorpen = 3;
+	
 	void toonWorpGeschiedenis(){
 		System.out.println("");
 		for(int x = 0; x < worpGeschiedenis.size(); x++){
