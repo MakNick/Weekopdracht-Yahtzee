@@ -30,16 +30,11 @@ public class YahtzeeSpel {
 			for(int beurtenIndex = 0; beurtenIndex < maxAantalBeurten; beurtenIndex++){
 				for(int spelerIndex = 0; spelerIndex < spelers.size(); spelerIndex++){
 					spelers.get(spelerIndex).aantalWorpen = 0;
-					System.out.println(">" + spelers.get(0).aantalWorpen);
-					System.out.println(">" + spelers.get(1).aantalWorpen);
-
 					while(spelers.get(spelerIndex).aantalWorpen < spelers.get(spelerIndex).maxAantalWorpen){
-						System.out.println("X" + spelers.get(0).aantalWorpen);
-						System.out.println("X" + spelers.get(1).aantalWorpen);
 						if(spelers.get(spelerIndex).aantalWorpen == 2){
 							werpDobbelstenen(spelerIndex, beurtenIndex);
 							opslaanWorp(spelerIndex);
-							spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex, beurtenIndex);
+							spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex);
 							spelers.get(spelerIndex).aantalWorpen = 3;
 							System.out.println("");
 						} else {
@@ -49,7 +44,7 @@ public class YahtzeeSpel {
 							String invoer = sc.next();
 							if(invoer.equals("p")){
 								opslaanWorp(spelerIndex);
-								spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex, beurtenIndex);
+								spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex);
 								spelers.get(spelerIndex).aantalWorpen = 3;
 								System.out.println("");
 							} else {

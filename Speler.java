@@ -8,10 +8,10 @@ public class Speler {
 	int aantalWorpen;
 	final int maxAantalWorpen = 3;
 		
-	void toonWorpGeschiedenis(int a, int b){
+	void toonWorpGeschiedenis(int a){
 		System.out.println("");
 		for(int x = 0; x < worpGeschiedenis.size(); x++){
-			System.out.print("\nGeschiedenis van " + YahtzeeSpel.spelers.get(a).naam + ", beurt " + (b + 1) + ": ");
+			System.out.print("\nGeschiedenis van " + YahtzeeSpel.spelers.get(a).naam + ", beurt " + (x + 1) + ": ");
 			for(int j = 0; j < 5; j++){
 				System.out.print("\t" + worpGeschiedenis.get(x).worpUitslag[j]);
 			}
