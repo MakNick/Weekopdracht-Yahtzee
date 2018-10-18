@@ -20,13 +20,9 @@ public class YahtzeeSpel {
 		
 	void spelen(){
 		toevoegenSpelers();
-//		System.out.println("\nDruk op enter om te spelen, druk op 'q' om te stoppen.");
-//		String invoer = sc.nextLine();
-//			if(invoer.equals("q")){
-//				doorspelen = false;
-//			}
 
 		while(doorspelen) {	
+			outerloop:
 			for(int beurtenIndex = 0; beurtenIndex < maxAantalBeurten; beurtenIndex++){
 				for(int spelerIndex = 0; spelerIndex < spelers.size(); spelerIndex++){
 					spelers.get(spelerIndex).aantalWorpen = 0;
@@ -41,20 +37,27 @@ public class YahtzeeSpel {
 							werpDobbelstenen(spelerIndex, beurtenIndex);
 							System.out.println("\nDruk op 'p' om de worp op te slaan.\n");
 							System.out.println("of selecteer welke dobbelstenen je wilt vasthouden.\nType '0' voor geen, anders bijvoorbeeld positie '13'");
+							System.out.println("\nDruk op 'q' om af te sluiten.");
 							String invoer = sc.next();
 							if(invoer.equals("p")){
 								opslaanWorp(spelerIndex);
 								spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex);
 								spelers.get(spelerIndex).aantalWorpen = 3;
 								System.out.println("");
+							} else if (invoer.equals("q")){
+								System.out.println("Spel beëindigd");
+								doorspelen = false;
+								break outerloop;
 							} else {
 								vasthouden(invoer);
 							}
 						}
 					}
-				}
-			}
-		}		
+				}	
+			}		
+		}
+		toonEindScores();
+		opnieuwSpelen();
 	}
 	
 	
@@ -108,5 +111,27 @@ public class YahtzeeSpel {
 			spelers.add(speler);
 		}
 	}
+	
+	void toonEindScores(){
+		for(int i = 0; i < spelers.size(); i++){
+			spelers.get(i).toonWorpGeschiedenis(i);
+			System.out.println("");
+		}
+	}
+	
+	void opnieuwSpelen(){
+		System.out.println("\n\nWil je opnieuw spelen?\nDruk 'j' voor ja.\nDruk 'n' om af te sluiten.");
+		String invoerOpnieuw = sc.next();
+		if(invoerOpnieuw.equals("j")){
+			for(int i = 0; i < spelers.size(); i++){
+				spelers.clear();
+			} 
+			doorspelen = true;
+			System.out.println("\n\n\n");
+			spelen();
+		} else if (invoerOpnieuw.equals("n")){
+			System.out.println("Spel afgesloten");
+		}
+	}	
 }		
 
