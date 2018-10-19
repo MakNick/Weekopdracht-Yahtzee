@@ -7,6 +7,7 @@ public class Speler {
 	String naam;
 	int aantalWorpen;
 	final static int maxAantalWorpen = 3;
+	ArrayList<Integer> scores = new ArrayList<Integer>();
 		
 	void toonWorpGeschiedenis(int a){
 		for(int x = 0; x < worpGeschiedenis.size(); x++){

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class Scorekaart {
 		static String[][] scorekaart;
-		static int enen = 0;
 			
 		void vulBasisKaart(ArrayList<Speler> spelers){
 			scorekaart = new String[8][(spelers.size() + 1)];
@@ -28,16 +27,10 @@ public class Scorekaart {
 			scorekaart[7][0] = "Totaal|";
 		}
 		
-		void setScoreSpeler(ArrayList<Speler> spelers, ArrayList<Dobbelsteen> dobbelstenen){
-			for(int i = 0; i < dobbelstenen.size(); i++){
-				if(dobbelstenen.get(i).ogenWorp == 1){
-					enen++;
-					System.out.println(enen);
-				}
-			}
-			String enen1 = Integer.toString(enen);
-			scorekaart[1][1] = enen1;
-		}
+//		void setScoreSpeler(ArrayList<Speler> spelers, ArrayList<Dobbelsteen> dobbelstenen){
+//			String enen1 = Integer.toString(enen.size() * 1);
+//			scorekaart[1][spelers.get(a)];
+//		}
 		
 		void toonKaart(ArrayList<Speler> spelers){
 			for(int i = 0; i < 8; i++){

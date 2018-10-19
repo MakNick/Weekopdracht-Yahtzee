@@ -14,7 +14,7 @@ public class YahtzeeSpel {
 	int[] blokkeerArray = {0,0,0,0,0};
 	int iteratorBlokkeerArray;
 	boolean doorspelen = true;
-	int maxAantalBeurten = 6;
+	int maxAantalBeurten = 2;
 	
 	YahtzeeSpel(){
 		for(int i = 0; i < 5; i++){
@@ -105,6 +105,10 @@ public class YahtzeeSpel {
 	void toevoegenSpelers(){
 		System.out.println("Welkom bij Yahtzee!\n\nHoeveel spelers wil je toevoegen?");
 		int aantalSpelers = sc.nextInt();
+		while(aantalSpelers<1 || aantalSpelers>6){
+			System.out.println("Het aantal spelers moet tussen de 1 en 6 zijn. Voer opnieuw in: ");
+			aantalSpelers = sc.nextInt();
+		}
 		sc.nextLine();
 		for(int x = 0; x < aantalSpelers; x++){
 			System.out.println("Speler " + (x+1) + " voer je naam in: ");
@@ -118,6 +122,7 @@ public class YahtzeeSpel {
 		System.out.println("Dit is de worpgeschiedenis van alle spelers:");
 		for(int i = 0; i < spelers.size(); i++){
 			spelers.get(i).toonWorpGeschiedenis(i);
+			System.out.println("Eindscore :" + spelers.get(i).scores);
 			System.out.println("");
 		}
 	}
@@ -137,7 +142,7 @@ public class YahtzeeSpel {
 	
 	void toonScoreChecker(){
 		scoreChecker.vulScoreChecker(dobbelstenen);
-		scoreChecker.toonScoreCategorie();
+		scoreChecker.toonScoreCategorie(spelers);
 	}
 	
 	void vervolgWorp(int a, int b){
