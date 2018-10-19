@@ -6,17 +6,16 @@ public class Speler {
 	ArrayList<Worp> worpGeschiedenis = new ArrayList<Worp>();
 	String naam;
 	int aantalWorpen;
-	final int maxAantalWorpen = 3;
+	final static int maxAantalWorpen = 3;
 		
 	void toonWorpGeschiedenis(int a){
-		System.out.println("");
 		for(int x = 0; x < worpGeschiedenis.size(); x++){
-			System.out.print("\nGeschiedenis van " + YahtzeeSpel.spelers.get(a).naam + ", beurt " + (x + 1) + ": ");
+			System.out.print("\n" + YahtzeeSpel.spelers.get(a).naam + ", beurt " + (x + 1) + ":");
 			for(int j = 0; j < 5; j++){
 				System.out.print("\t" + worpGeschiedenis.get(x).worpUitslag[j]);
 			}
-			System.out.println("");
 		}
+		System.out.println("");
 	}
 	
 	void setWorpGeschiedenis(Worp worp){

@@ -5,12 +5,16 @@ import java.util.Scanner;
 
 public class YahtzeeSpel {
 	static Scanner sc = new Scanner(System.in);
-	ArrayList<Dobbelsteen> dobbelstenen = new ArrayList<>();
 	static ArrayList<Speler> spelers = new ArrayList<>();
+	ArrayList<Dobbelsteen> dobbelstenen = new ArrayList<>();
+	
+	ScoreChecker scoreChecker = new ScoreChecker();
+	Scorekaart scorekaart = new Scorekaart();
+	
 	int[] blokkeerArray = {0,0,0,0,0};
 	int iteratorBlokkeerArray;
 	boolean doorspelen = true;
-	int maxAantalBeurten = 13;
+	int maxAantalBeurten = 6;
 	
 	YahtzeeSpel(){
 		for(int i = 0; i < 5; i++){
@@ -20,28 +24,24 @@ public class YahtzeeSpel {
 		
 	void spelen(){
 		toevoegenSpelers();
-
+	
 		while(doorspelen) {	
 			outerloop:
-			for(int beurtenIndex = 0; beurtenIndex < maxAantalBeurten; beurtenIndex++){
+			for(int beurtenIndex = 0; beurtenIndex <= maxAantalBeurten; beurtenIndex++){
+				if(beurtenIndex == maxAantalBeurten){
+					doorspelen = false;
+					break outerloop;
+				}
 				for(int spelerIndex = 0; spelerIndex < spelers.size(); spelerIndex++){
 					spelers.get(spelerIndex).aantalWorpen = 0;
-					while(spelers.get(spelerIndex).aantalWorpen < spelers.get(spelerIndex).maxAantalWorpen){
+					while(spelers.get(spelerIndex).aantalWorpen < Speler.maxAantalWorpen){
 						if(spelers.get(spelerIndex).aantalWorpen == 2){
-							werpDobbelstenen(spelerIndex, beurtenIndex);
-							opslaanWorp(spelerIndex);
-							spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex);
-							spelers.get(spelerIndex).aantalWorpen = 3;
-							System.out.println("");
+							laatsteWorp(spelerIndex, beurtenIndex);
 						} else {
-							werpDobbelstenen(spelerIndex, beurtenIndex);
-							System.out.println("\nDruk op 'p' om de worp op te slaan.\n");
-							System.out.println("of selecteer welke dobbelstenen je wilt vasthouden.\nType '0' voor geen, anders bijvoorbeeld positie '13'");
-							System.out.println("\nDruk op 'q' om af te sluiten.");
+							vervolgWorp(spelerIndex, beurtenIndex);
 							String invoer = sc.next();
 							if(invoer.equals("p")){
 								opslaanWorp(spelerIndex);
-								spelers.get(spelerIndex).toonWorpGeschiedenis(spelerIndex);
 								spelers.get(spelerIndex).aantalWorpen = 3;
 								System.out.println("");
 							} else if (invoer.equals("q")){
@@ -50,16 +50,17 @@ public class YahtzeeSpel {
 								break outerloop;
 							} else {
 								vasthouden(invoer);
-							}
+							}						
 						}
 					}
 				}	
 			}		
 		}
 		toonEindScores();
+		scorekaart.vulBasisKaart(spelers);
+		scorekaart.toonKaart(spelers);
 		opnieuwSpelen();
 	}
-	
 	
 	void vasthouden(String invoerVasthouden) {
 		for(int i = 0; i < invoerVasthouden.length(); i++){
@@ -104,15 +105,17 @@ public class YahtzeeSpel {
 	void toevoegenSpelers(){
 		System.out.println("Welkom bij Yahtzee!\n\nHoeveel spelers wil je toevoegen?");
 		int aantalSpelers = sc.nextInt();
+		sc.nextLine();
 		for(int x = 0; x < aantalSpelers; x++){
 			System.out.println("Speler " + (x+1) + " voer je naam in: ");
 			Speler speler = new Speler();
-			speler.naam = sc.next();
+			speler.naam = sc.nextLine();
 			spelers.add(speler);
 		}
 	}
 	
 	void toonEindScores(){
+		System.out.println("Dit is de worpgeschiedenis van alle spelers:");
 		for(int i = 0; i < spelers.size(); i++){
 			spelers.get(i).toonWorpGeschiedenis(i);
 			System.out.println("");
@@ -123,9 +126,7 @@ public class YahtzeeSpel {
 		System.out.println("\n\nWil je opnieuw spelen?\nDruk 'j' voor ja.\nDruk 'n' om af te sluiten.");
 		String invoerOpnieuw = sc.next();
 		if(invoerOpnieuw.equals("j")){
-			for(int i = 0; i < spelers.size(); i++){
-				spelers.clear();
-			} 
+			spelers.clear();
 			doorspelen = true;
 			System.out.println("\n\n\n");
 			spelen();
@@ -133,5 +134,26 @@ public class YahtzeeSpel {
 			System.out.println("Spel afgesloten");
 		}
 	}	
+	
+	void toonScoreChecker(){
+		scoreChecker.vulScoreChecker(dobbelstenen);
+		scoreChecker.toonScoreCategorie();
+	}
+	
+	void vervolgWorp(int a, int b){
+		werpDobbelstenen(a, b);
+		toonScoreChecker();
+		System.out.println("\nDruk op 'p' om de worp op te slaan.\n");
+		System.out.println("of selecteer welke dobbelstenen je wilt vasthouden.\nType '0' voor geen, anders bijvoorbeeld positie '13'");
+		System.out.println("\nDruk op 'q' om af te sluiten.");
+	}
+	
+	void laatsteWorp(int a, int b){
+		werpDobbelstenen(a, b);
+		toonScoreChecker();
+		opslaanWorp(a);
+		spelers.get(a).aantalWorpen = 3;
+		System.out.println("");
+	}
 }		
 
