@@ -10,7 +10,7 @@ package Weekopdracht02Yahtzee;
 import java.util.ArrayList;
 
 public class Scorekaart {
-		static String[][] scorekaart;
+		String[][] scorekaart; // waarom was deze static???
 			
 		void vulBasisKaart(ArrayList<Speler> spelers){
 			scorekaart = new String[8][(spelers.size() + 1)];
