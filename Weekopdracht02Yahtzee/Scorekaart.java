@@ -10,7 +10,8 @@ package Weekopdracht02Yahtzee;
 import java.util.ArrayList;
 
 public class Scorekaart {
-		static String[][] scorekaart;
+		static String[][] scorekaart; // wellicht refactoren naar niet static???
+		// => door bijvoorbeeld een instance op te nemen of door het Singleton pattern te gebruiken???
 			
 		void vulBasisKaart(ArrayList<Speler> spelers){
 			scorekaart = new String[8][(spelers.size() + 1)];
